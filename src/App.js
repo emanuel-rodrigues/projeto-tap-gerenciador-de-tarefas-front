@@ -1,25 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect }from 'react';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+} from 'react-router-dom';
+import ListaDeTarefas from './componentes/ListaDeTarefas';
+import Cabecalho from './componentes/Cabecalho';
+import PaginaNaoEncontrada from './componentes/PáginaNaoEncontrada';
+import CadastrarTarefa from './componentes/CadastrarTarefa';
+import Login from './componentes/Login';
+import axios from 'axios'
 
-function App() {
+
+const URL = 'http://api-pacientes.herokuapp.com/pacientes/';
+
+
+const App = () => {
+
+  
+  const [tarefas, setTarefas] = useState([]);
+
+  useEffect(async ()=>{
+    let response = await axios.get(URL);
+    setTarefas(response.data);        
+  }, []) ;
+
+     
+
+
+    const removerTarefa = async (tarefa) =>{    
+      let indice = tarefas.findIndex((index) => index.id === tarefa.id);//id
+      if(indice >= 0){
+        setTarefas([...tarefas.slice(0, indice), ...tarefas.slice(indice + 1)]);
+        await axios.delete(URL + tarefa.id)//id
+      }         
+      
+    };
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Cabecalho />
+      <Switch>
+        <Route path='/' exact={true}>
+          <Login />
+        </Route>
+        <Route path='/cadastrar' >
+          <CadastrarTarefa />          
+        </Route>
+        <Route path='/tarefas' >
+          <ListaDeTarefas tarefas={tarefas} removerTarefa={removerTarefa}/>          
+        </Route>
+        <Route path='*'>
+          <PaginaNaoEncontrada />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
