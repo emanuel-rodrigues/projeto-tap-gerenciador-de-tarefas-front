@@ -14,7 +14,7 @@ import Login from './componentes/Login';
 import axios from 'axios'
 
 
-const URL = 'http://api-pacientes.herokuapp.com/pacientes/';
+const URL = '';
 
 
 const App = () => {

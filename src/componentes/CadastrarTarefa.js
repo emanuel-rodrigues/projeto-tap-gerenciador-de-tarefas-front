@@ -3,7 +3,7 @@ import {Button, Form, Jumbotron, Modal} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-const URL_CADASTRO = 'http://localhost:5000';
+const URL_CADASTRO = '';
 
 
 const CadastrarTarefa = () => {
