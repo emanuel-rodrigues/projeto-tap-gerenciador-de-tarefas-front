@@ -10,7 +10,7 @@ const ListaDeTarefas = ({tarefas, removerTarefa}) => {
 
     const renderTarefa = (tarefa) => {
         return (        
-            <li className='list-group-item'>{tarefa.nome} &nbsp; 
+            <li className='list-group-item'>{tarefa} &nbsp; 
             <button onClick={(e)=>removerTarefa(tarefa)}>Exluir</button>
             </li>
         )

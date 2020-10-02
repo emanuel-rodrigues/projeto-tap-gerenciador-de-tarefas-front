@@ -31,10 +31,10 @@ const App = () => {
 
 
     const removerTarefa = async (tarefa) =>{    
-      let indice = tarefas.findIndex((index) => index.id === tarefa.id);//id
+      let indice = tarefas.findIndex((index) => index._id === tarefa._id);
       if(indice >= 0){
         setTarefas([...tarefas.slice(0, indice), ...tarefas.slice(indice + 1)]);
-        await axios.delete(URL + tarefa.id)//id
+        await axios.delete(URL + tarefa._id);
       }         
       
     };
